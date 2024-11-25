@@ -7,8 +7,7 @@ import de.benedikt_schwering.thicnd.ports.out.RecipeEvents;
 import de.benedikt_schwering.thicnd.ports.out.RecipeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -59,7 +58,15 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<QuantifiedIngredient> getTotalIngredients(String id) {
-        return List.of();
+    public List<QuantifiedIngredient> getTotalIngredients(Recipe recipe) {
+        Map<String, Double> totalIngredients = new HashMap<String, Double>();
+
+        for (var step: recipe.getSteps())
+            for (var quantifiedIngredient: step.getQuantifiedIngredients())
+                totalIngredients.merge(quantifiedIngredient.getIngredient(), quantifiedIngredient.getQuantity(), Double::sum);
+
+        return totalIngredients.entrySet().stream().map(entry -> {
+            return new QuantifiedIngredient(entry.getKey(), entry.getValue());
+        }).toList();
     }
 }

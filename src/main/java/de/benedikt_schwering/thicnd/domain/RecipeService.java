@@ -17,5 +17,5 @@ public interface RecipeService {
 
     void deleteRecipe(String id);
 
-    List<QuantifiedIngredient> getTotalIngredients(String id);
+    List<QuantifiedIngredient> getTotalIngredients(Recipe recipe);
 }
