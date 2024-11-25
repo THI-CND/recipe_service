@@ -41,7 +41,7 @@ public class RecipeEventsImpl implements RecipeEvents {
         rabbitTemplate.convertAndSend(
                 exchange.getName(),
                 "recipe.deleted",
-                RecipeDeletedEvent.fromId(id)
+                RecipeDeletedEvent.fromId(id).toJSON()
         );
     }
 }
