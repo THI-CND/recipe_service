@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipe")
-public class RecipeController {
+public class RecipeRestController {
     private final RecipeService recipeService;
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeRestController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 

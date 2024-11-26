@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package de.benedikt_schwering.thicnd.stubs;
+
+option java_multiple_files = true;
+option java_package = "de.benedikt_schwering.thicnd.stubs";
+
+service RecipeService {
+  rpc Test (TestRequest) returns (TestResponse);
+}
+
+message TestRequest {
+  string name = 1;
+}
+
+message TestResponse {
+  string message = 1;
+}
