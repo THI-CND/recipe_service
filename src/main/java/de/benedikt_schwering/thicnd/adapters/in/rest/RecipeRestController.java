@@ -3,6 +3,7 @@ package de.benedikt_schwering.thicnd.adapters.in.rest;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.QuantifiedIngredientResponse;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.RecipeRequest;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.RecipeResponse;
+import de.benedikt_schwering.thicnd.adapters.in.rest.dto.TotalIngredientResponse;
 import de.benedikt_schwering.thicnd.domain.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +36,11 @@ public class RecipeRestController {
     }
 
     @GetMapping("/{id}/total-ingredients")
-    public List<QuantifiedIngredientResponse> getTotalIngredients(@PathVariable String id) {
+    public List<TotalIngredientResponse> getTotalIngredients(@PathVariable String id) {
         var recipe = recipeService.getRecipe(id);
 
         if (recipe.isPresent())
-            return recipeService.getTotalIngredients(recipe.get()).stream().map(QuantifiedIngredientResponse::fromQuantifiedIngredient).toList();
+            return recipeService.getTotalIngredients(recipe.get()).stream().map(TotalIngredientResponse::fromQuantifiedIngredient).toList();
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
     }
