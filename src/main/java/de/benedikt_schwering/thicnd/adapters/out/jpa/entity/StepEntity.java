@@ -16,7 +16,7 @@ public class StepEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<QuantifiedIngredientEntity> quantifiedIngredients;
     private String description;
 
