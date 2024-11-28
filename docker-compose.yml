@@ -21,6 +21,7 @@ services:
 #    restart: unless-stopped
 #    ports:
 #      - "8080:8080"
+#      - "9090:9090"
 #    environment:
 #        DB_URL: jdbc:postgresql://postgres:5432/recipe
 #        DB_USER: postgres
@@ -29,3 +30,6 @@ services:
 #        RABBIT_PORT: 5672
 #        RABBIT_USER: guest
 #        RABBIT_PASSWORD: guest
+#    depends_on:
+#      - postgres
+#      - rabbitmq
