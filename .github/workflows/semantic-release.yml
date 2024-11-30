@@ -1,4 +1,4 @@
-name: Release
+name: Semantic Release
 
 on:
   push:
@@ -33,5 +33,5 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.THI_CND_TOKEN }}
         run: semantic-release
