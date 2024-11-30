@@ -1,12 +1,12 @@
-name: Docker
+name: Build Main
 
 on:
   push:
-    branches:
-      - 'main'
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
-  service:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,4 +31,4 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/thi-cnd/recipe_service:latest
+          tags: ghcr.io/thi-cnd/recipe_service:${{ github.event.release.tag_name }}
