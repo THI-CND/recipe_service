@@ -1,9 +1,12 @@
-name: Build
+name: Build Release
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  release:
+    types: [published]
+
+concurrency:
+  group: build-release
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -25,10 +28,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push LATEST
+        if: '!github.event.prerelease'
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/thi-cnd/recipe_service:${{ github.event.release.tag_name }}
+          tags: ghcr.io/thi-cnd/recipe_service:latest
+
+      - name: Build and push NEXT
+        if: 'github.event.prerelease'
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/thi-cnd/recipe_service:next
