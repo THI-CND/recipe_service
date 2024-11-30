@@ -1,8 +1,8 @@
-name: Build Release
+name: Build Next
 
 on:
   release:
-    types: [published]
+    types: [prereleased]
 
 concurrency:
   group: build-release
@@ -28,17 +28,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push LATEST
-        if: '!github.event.prerelease'
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64
-          push: true
-          tags: ghcr.io/thi-cnd/recipe_service:latest
-
-      - name: Build and push NEXT
-        if: 'github.event.prerelease'
+      - name: Build and push Next
         uses: docker/build-push-action@v3
         with:
           context: .
