@@ -1,6 +1,5 @@
 package de.benedikt_schwering.thicnd.adapters.in.rest;
 
-import de.benedikt_schwering.thicnd.adapters.in.rest.dto.QuantifiedIngredientResponse;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.RecipeRequest;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.RecipeResponse;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.TotalIngredientResponse;
@@ -12,11 +11,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/recipe")
-public class RecipeRestController {
+@RequestMapping("/api/v1/recipe")
+public class RecipeRestV1Controller {
     private final RecipeService recipeService;
 
-    public RecipeRestController(RecipeService recipeService) {
+    public RecipeRestV1Controller(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 

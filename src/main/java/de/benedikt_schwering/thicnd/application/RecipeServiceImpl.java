@@ -3,6 +3,7 @@ package de.benedikt_schwering.thicnd.application;
 import de.benedikt_schwering.thicnd.domain.RecipeService;
 import de.benedikt_schwering.thicnd.domain.model.QuantifiedIngredient;
 import de.benedikt_schwering.thicnd.domain.model.Recipe;
+import de.benedikt_schwering.thicnd.domain.model.Step;
 import de.benedikt_schwering.thicnd.ports.out.RecipeEvents;
 import de.benedikt_schwering.thicnd.ports.out.RecipeRepository;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,26 @@ public class RecipeServiceImpl implements RecipeService {
         return totalIngredients.entrySet().stream().map(entry -> {
             return new QuantifiedIngredient(entry.getKey(), entry.getValue());
         }).toList();
+    }
+
+    @Override
+    public Optional<Recipe> addStepToRecipe(String id, Step step) {
+        var recipe = recipeRepository.getRecipe(id);
+
+        if (recipe.isPresent()) {
+            var updatedRecipe = recipe.get();
+
+            var steps = new ArrayList<Step>(updatedRecipe.getSteps());
+            steps.add(step);
+
+            updatedRecipe.setSteps(steps);
+
+            var savedRecipe = recipeRepository.saveRecipe(updatedRecipe);
+            recipeEvents.recipeUpdated(savedRecipe);
+
+            return Optional.of(savedRecipe);
+        }
+
+        return Optional.empty();
     }
 }

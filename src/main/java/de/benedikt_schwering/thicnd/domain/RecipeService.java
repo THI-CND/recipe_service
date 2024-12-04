@@ -2,6 +2,7 @@ package de.benedikt_schwering.thicnd.domain;
 
 import de.benedikt_schwering.thicnd.domain.model.QuantifiedIngredient;
 import de.benedikt_schwering.thicnd.domain.model.Recipe;
+import de.benedikt_schwering.thicnd.domain.model.Step;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +19,6 @@ public interface RecipeService {
     void deleteRecipe(String id);
 
     List<QuantifiedIngredient> getTotalIngredients(Recipe recipe);
+
+    Optional<Recipe> addStepToRecipe(String id, Step step);
 }
