@@ -28,4 +28,17 @@ public class RecipeRestV2Controller {
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
     }
+
+    @DeleteMapping("/{id}/step/{stepId}")
+    public RecipeResponse deleteStepFromRecipe(@PathVariable String id, @PathVariable String stepId) {
+        var recipe = recipeService.deleteStepFromRecipe(
+                id,
+                stepId
+        );
+
+        if (recipe.isPresent())
+            return RecipeResponse.fromRecipe(recipe.get());
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
+    }
 }

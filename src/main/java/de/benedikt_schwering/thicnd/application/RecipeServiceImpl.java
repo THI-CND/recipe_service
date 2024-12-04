@@ -91,4 +91,25 @@ public class RecipeServiceImpl implements RecipeService {
 
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Recipe> deleteStepFromRecipe(String id, String stepId) {
+        var recipe = recipeRepository.getRecipe(id);
+
+        if (recipe.isPresent()) {
+            var updatedRecipe = recipe.get();
+
+            var steps = new ArrayList<Step>(updatedRecipe.getSteps());
+            steps.removeIf(step -> step.getId().equals(stepId));
+
+            updatedRecipe.setSteps(steps);
+
+            var savedRecipe = recipeRepository.saveRecipe(updatedRecipe);
+            recipeEvents.recipeUpdated(savedRecipe);
+
+            return Optional.of(savedRecipe);
+        }
+
+        return Optional.empty();
+    }
 }

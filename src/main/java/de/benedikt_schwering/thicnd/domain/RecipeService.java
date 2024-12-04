@@ -21,4 +21,6 @@ public interface RecipeService {
     List<QuantifiedIngredient> getTotalIngredients(Recipe recipe);
 
     Optional<Recipe> addStepToRecipe(String id, Step step);
+
+    Optional<Recipe> deleteStepFromRecipe(String id, String stepId);
 }
