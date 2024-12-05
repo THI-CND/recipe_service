@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
-class RecipeRestControllerTests {
+class RecipeRestV1ControllerTests {
     private final MockMvc mvc;
     private final RecipeRepository recipeRepository;
 
@@ -34,7 +34,7 @@ class RecipeRestControllerTests {
     private RecipeEvents recipeEvents;
 
     @Autowired
-    public RecipeRestControllerTests(MockMvc mvc, RecipeRepository recipeRepository) {
+    public RecipeRestV1ControllerTests(MockMvc mvc, RecipeRepository recipeRepository) {
         this.mvc = mvc;
         this.recipeRepository = recipeRepository;
     }
@@ -43,7 +43,7 @@ class RecipeRestControllerTests {
     @Order(1)
     public void emptyRecipes() throws Exception {
         mvc.perform(
-                        get("/api/recipe")
+                        get("/api/v1/recipe")
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
@@ -86,7 +86,7 @@ class RecipeRestControllerTests {
         );
 
         mvc.perform(
-                        post("/api/recipe")
+                        post("/api/v1/recipe")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(asJsonString(recipe))
                 )
@@ -100,7 +100,7 @@ class RecipeRestControllerTests {
     @Order(3)
     public void getRecipes() throws Exception {
         mvc.perform(
-                        get("/api/recipe")
+                        get("/api/v1/recipe")
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
@@ -114,7 +114,7 @@ class RecipeRestControllerTests {
         var recipe = recipeRepository.getRecipes().getFirst();
 
         mvc.perform(
-                        get("/api/recipe/" + recipe.getId())
+                        get("/api/v1/recipe/" + recipe.getId())
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Spaghetti Carbonara"))
@@ -129,7 +129,7 @@ class RecipeRestControllerTests {
         recipe.setDescription("This was updated!");
 
         mvc.perform(
-                        put("/api/recipe/" + recipe.getId())
+                        put("/api/v1/recipe/" + recipe.getId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(asJsonString(recipe))
                 )
@@ -144,12 +144,12 @@ class RecipeRestControllerTests {
         var recipe = recipeRepository.getRecipes().getFirst();
 
         mvc.perform(
-                        delete("/api/recipe/" + recipe.getId())
+                        delete("/api/v1/recipe/" + recipe.getId())
                 )
                 .andExpect(status().isOk());
 
         mvc.perform(
-                        get("/api/recipe")
+                        get("/api/v1/recipe")
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
