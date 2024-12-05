@@ -6,6 +6,7 @@ import de.benedikt_schwering.thicnd.domain.model.Step;
 import de.benedikt_schwering.thicnd.ports.out.StepRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -39,8 +40,26 @@ public class StepServiceImpl implements StepService {
         if (step.isPresent()) {
             var updatedStep = step.get();
 
-            var quantifiedIngredients = updatedStep.getQuantifiedIngredients();
+            var quantifiedIngredients = new ArrayList<QuantifiedIngredient>(updatedStep.getQuantifiedIngredients());
             quantifiedIngredients.add(quantifiedIngredient);
+
+            updatedStep.setQuantifiedIngredients(quantifiedIngredients);
+
+            return Optional.of(stepRepository.saveStep(updatedStep));
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Step> deleteQuantifiedIngredientFromStep(String id, String quantifiedIngredientId) {
+        var step = stepRepository.getStep(id);
+
+        if (step.isPresent()) {
+            var updatedStep = step.get();
+
+            var quantifiedIngredients = new ArrayList<QuantifiedIngredient>(updatedStep.getQuantifiedIngredients());
+            quantifiedIngredients.removeIf(quantifiedIngredient -> quantifiedIngredient.getId().equals(quantifiedIngredientId));
 
             updatedStep.setQuantifiedIngredients(quantifiedIngredients);
 

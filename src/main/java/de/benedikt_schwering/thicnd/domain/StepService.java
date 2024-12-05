@@ -11,4 +11,6 @@ public interface StepService {
     Optional<Step> updateStep(String id, Step step);
 
     Optional<Step> addQuantifiedIngredientToStep(String id, QuantifiedIngredient quantifiedIngredient);
+
+    Optional<Step> deleteQuantifiedIngredientFromStep(String id, String quantifiedIngredientId);
 }
