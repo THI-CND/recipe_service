@@ -16,3 +16,5 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USER:guest}
     password: ${RABBIT_PASSWORD:guest}
+service:
+  rabbitmq-exchange: ${RABBIT_EXCHANGE:recipemanagement}
