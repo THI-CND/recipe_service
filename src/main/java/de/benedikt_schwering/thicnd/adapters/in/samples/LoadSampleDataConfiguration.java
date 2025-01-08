@@ -22,7 +22,7 @@ public class LoadSampleDataConfiguration {
                     new Step(
                             List.of(
                                     new QuantifiedIngredient(
-                                            "spaghetti",
+                                            1,
                                             200
                                     )
                             ),
@@ -31,11 +31,11 @@ public class LoadSampleDataConfiguration {
                     new Step(
                             List.of(
                                     new QuantifiedIngredient(
-                                            "pancetta",
+                                            2,
                                             100
                                     ),
                                     new QuantifiedIngredient(
-                                            "olive oil",
+                                            1,
                                             1
                                     )
                             ),

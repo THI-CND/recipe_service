@@ -16,5 +16,12 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USER:guest}
     password: ${RABBIT_PASSWORD:guest}
+
+grpc:
+  client:
+    ingredient-service:
+      address: "localhost:9091"
+      negotiation-type: plaintext
+
 service:
   rabbitmq-exchange: ${RABBIT_EXCHANGE:recipemanagement}

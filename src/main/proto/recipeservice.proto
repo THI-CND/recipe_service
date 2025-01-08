@@ -9,6 +9,7 @@ service RecipeService {
   rpc GetRecipes (Null) returns (RecipesResponse);
   rpc GetRecipe (RecipeIdRequest) returns (RecipeResponse);
   rpc GetTotalIngredients (RecipeIdRequest) returns (TotalIngredientsResponse);
+  rpc GetAssociatedTags (RecipeIdRequest) returns (AssociatedTagsResponse);
   rpc CreateRecipe (CreateRecipeRequest) returns (RecipeResponse);
   rpc UpdateRecipe (UpdateRecipeRequest) returns (RecipeResponse);
   rpc DeleteRecipe (RecipeIdRequest) returns (Null);
@@ -75,4 +76,9 @@ message TotalIngredientsResponse {
 message TotalIngredientResponse {
   int64 ingredient = 1;
   double quantity = 2;
+}
+
+message AssociatedTagsResponse {
+  repeated string intersection = 1;
+  repeated string union = 2;
 }

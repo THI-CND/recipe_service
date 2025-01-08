@@ -1,5 +1,6 @@
 package de.benedikt_schwering.thicnd.adapters.in.rest;
 
+import de.benedikt_schwering.thicnd.adapters.in.rest.dto.AssociatedTagsResponse;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.RecipeRequest;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.RecipeResponse;
 import de.benedikt_schwering.thicnd.adapters.in.rest.dto.TotalIngredientResponse;
@@ -40,6 +41,16 @@ public class RecipeRestV1Controller {
 
         if (recipe.isPresent())
             return recipeService.getTotalIngredients(recipe.get()).stream().map(TotalIngredientResponse::fromQuantifiedIngredient).toList();
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
+    }
+
+    @GetMapping("/{id}/associated-tags")
+    public AssociatedTagsResponse getAssociatedTags(@PathVariable String id) {
+        var recipe = recipeService.getRecipe(id);
+
+        if (recipe.isPresent())
+            return AssociatedTagsResponse.fromAssociatedTags(recipeService.getAssociatedTags(recipe.get()));
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
     }

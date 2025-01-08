@@ -22,6 +22,14 @@ Response:
 - Status: 200 OK
 - Body: `List<TotalIngredientResponse>`
 
+##### GET `/api/v1/recipe/{id}/associated-tags`
+Gibt alle Tags zurück, die mit dem Rezept mit der ID `id` assoziiert sind.\
+`Intersection` umfasst die Tags, die in jederem Rezept vorkommen.\
+`Union` umfasst die Tags, die in mindestens einem Rezept vorkommen.\
+Response:
+- Status: 200 OK
+- Body: `List<AssociatedTagsResponse>`
+
 ##### POST `/api/v1/recipe`
 Erstellt ein neues Rezept.\
 Request:
@@ -113,6 +121,7 @@ service RecipeService {
   rpc GetRecipes (Null) returns (RecipesResponse);
   rpc GetRecipe (RecipeIdRequest) returns (RecipeResponse);
   rpc GetTotalIngredients (RecipeIdRequest) returns (TotalIngredientsResponse);
+  rpc GetAssociatedTags (RecipeIdRequest) returns (AssociatedTagsResponse);
   rpc CreateRecipe (CreateRecipeRequest) returns (RecipeResponse);
   rpc UpdateRecipe (UpdateRecipeRequest) returns (RecipeResponse);
   rpc DeleteRecipe (RecipeIdRequest) returns (Null);
@@ -145,7 +154,7 @@ message StepRequest {
 }
 
 message QuantifiedIngredientRequest {
-  string ingredient = 1;
+  int64 ingredient = 1;
   double quantity = 2;
 }
 
@@ -168,7 +177,7 @@ message StepResponse {
 
 message QuantifiedIngredientResponse {
   string id = 1;
-  string ingredient = 2;
+  int64 ingredient = 2;
   double quantity = 3;
 }
 
@@ -177,8 +186,13 @@ message TotalIngredientsResponse {
 }
 
 message TotalIngredientResponse {
-  string ingredient = 1;
+  int64 ingredient = 1;
   double quantity = 2;
+}
+
+message AssociatedTagsResponse {
+  repeated string intersection = 1;
+  repeated string union = 2;
 }
 ```
 
@@ -205,7 +219,7 @@ Payload: `RecipeDeletedEvent`
     {
       "quantifiedIngredients": [
         {
-          "ingredient": "string",
+          "ingredient": 0,
           "quantity": 0
         }
       ],
@@ -227,7 +241,7 @@ Payload: `RecipeDeletedEvent`
       "quantifiedIngredients": [
         {
           "id": "string",
-          "ingredient": "string",
+          "ingredient": 0,
           "quantity": 0
         }
       ],
@@ -250,7 +264,7 @@ Payload: `RecipeDeletedEvent`
 {
   "quantifiedIngredients": [
     {
-      "ingredient": "string",
+      "ingredient": 0,
       "quantity": 0
     }
   ],
@@ -265,7 +279,7 @@ Payload: `RecipeDeletedEvent`
   "quantifiedIngredients": [
     {
       "id": "string",
-      "ingredient": "string",
+      "ingredient": 0,
       "quantity": 0
     }
   ],
@@ -276,7 +290,7 @@ Payload: `RecipeDeletedEvent`
 ### `QuantifiedIngredientRequest`
 ```json
 {
-  "ingredient": "string",
+  "ingredient": 0,
   "quantity": 0
 }
 ```
@@ -285,7 +299,7 @@ Payload: `RecipeDeletedEvent`
 ```json
 {
   "id": "string",
-  "ingredient": "string",
+  "ingredient": 0,
   "quantity": 0
 }
 ```
@@ -302,7 +316,7 @@ Payload: `RecipeDeletedEvent`
       "quantifiedIngredients": [
         {
           "id": "string",
-          "ingredient": "string",
+          "ingredient": 0,
           "quantity": 0
         }
       ],
