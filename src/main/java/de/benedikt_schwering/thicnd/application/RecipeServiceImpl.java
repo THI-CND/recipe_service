@@ -1,11 +1,14 @@
 package de.benedikt_schwering.thicnd.application;
 
 import de.benedikt_schwering.thicnd.domain.RecipeService;
+import de.benedikt_schwering.thicnd.domain.model.AssociatedTags;
 import de.benedikt_schwering.thicnd.domain.model.QuantifiedIngredient;
 import de.benedikt_schwering.thicnd.domain.model.Recipe;
 import de.benedikt_schwering.thicnd.domain.model.Step;
+import de.benedikt_schwering.thicnd.ports.out.IngredientProvider;
 import de.benedikt_schwering.thicnd.ports.out.RecipeEvents;
 import de.benedikt_schwering.thicnd.ports.out.RecipeRepository;
+import io.grpc.StatusRuntimeException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,10 +17,12 @@ import java.util.*;
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeEvents recipeEvents;
+    private final IngredientProvider ingredientProvider;
 
-    RecipeServiceImpl(RecipeRepository recipeRepository, RecipeEvents recipeEvents) {
+    RecipeServiceImpl(RecipeRepository recipeRepository, RecipeEvents recipeEvents, IngredientProvider ingredientProvider) {
         this.recipeRepository = recipeRepository;
         this.recipeEvents = recipeEvents;
+        this.ingredientProvider = ingredientProvider;
     }
 
     @Override
@@ -60,15 +65,43 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<QuantifiedIngredient> getTotalIngredients(Recipe recipe) {
-        Map<String, Double> totalIngredients = new HashMap<String, Double>();
+        Map<Long, Double> totalIngredients = new HashMap<Long, Double>();
 
-        for (var step: recipe.getSteps())
-            for (var quantifiedIngredient: step.getQuantifiedIngredients())
+        for (var step : recipe.getSteps())
+            for (var quantifiedIngredient : step.getQuantifiedIngredients())
                 totalIngredients.merge(quantifiedIngredient.getIngredient(), quantifiedIngredient.getQuantity(), Double::sum);
 
         return totalIngredients.entrySet().stream().map(entry -> {
             return new QuantifiedIngredient(entry.getKey(), entry.getValue());
         }).toList();
+    }
+
+    @Override
+    public AssociatedTags getAssociatedTags(Recipe recipe) {
+        var totalIngredients = getTotalIngredients(recipe);
+
+        Set<String> intersection = new HashSet<String>();
+        Set<String> union = new HashSet<String>();
+
+        for (int i = 0; i < totalIngredients.size(); i++) {
+            try {
+                var ingredient = ingredientProvider.getIngredient(totalIngredients.get(i).getIngredient());
+
+                union.addAll(ingredient.getTags());
+
+                if (i == 0)
+                    intersection.addAll(ingredient.getTags());
+                else
+                    intersection.retainAll(ingredient.getTags());
+            } catch (StatusRuntimeException e) {
+                continue;
+            }
+        }
+
+        return new AssociatedTags(
+                intersection.stream().toList(),
+                union.stream().toList()
+        );
     }
 
     @Override

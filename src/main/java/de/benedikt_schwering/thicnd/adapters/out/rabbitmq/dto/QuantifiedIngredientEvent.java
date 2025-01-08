@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class QuantifiedIngredientEvent {
     private String id;
-    private String ingredient;
+    private long ingredient;
     private double quantity;
 
     public static QuantifiedIngredientEvent fromQuantifiedIngredient(QuantifiedIngredient quantifiedIngredient) {

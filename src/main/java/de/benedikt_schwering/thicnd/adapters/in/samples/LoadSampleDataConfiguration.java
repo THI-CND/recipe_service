@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import java.util.List;
 
 @Configuration
-@Profile("development")
+@Profile({"development"})
 public class LoadSampleDataConfiguration {
     private final RecipeService recipeService;
 
@@ -22,7 +22,7 @@ public class LoadSampleDataConfiguration {
                     new Step(
                             List.of(
                                     new QuantifiedIngredient(
-                                            "spaghetti",
+                                            1,
                                             200
                                     )
                             ),
@@ -31,11 +31,11 @@ public class LoadSampleDataConfiguration {
                     new Step(
                             List.of(
                                     new QuantifiedIngredient(
-                                            "pancetta",
+                                            2,
                                             100
                                     ),
                                     new QuantifiedIngredient(
-                                            "olive oil",
+                                            1,
                                             1
                                     )
                             ),

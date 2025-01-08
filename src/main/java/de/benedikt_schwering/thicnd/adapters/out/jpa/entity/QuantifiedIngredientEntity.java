@@ -17,7 +17,7 @@ public class QuantifiedIngredientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String ingredient;
+    private long ingredient;
     private double quantity;
 
     public static QuantifiedIngredientEntity fromQuantifiedIngredient(QuantifiedIngredient quantifiedIngredient) {

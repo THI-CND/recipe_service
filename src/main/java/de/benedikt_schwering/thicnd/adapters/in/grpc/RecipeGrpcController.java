@@ -49,6 +49,20 @@ public class RecipeGrpcController extends RecipeServiceGrpc.RecipeServiceImplBas
     }
 
     @Override
+    public void getAssociatedTags(RecipeIdRequest request, StreamObserver<AssociatedTagsResponse> responseStreamObserver) {
+        var recipe = recipeService.getRecipe(request.getId());
+
+        if (recipe.isPresent()) {
+            var associatedTags = recipeService.getAssociatedTags(recipe.get());
+
+            responseStreamObserver.onNext(GrpcDtoConverter.toAssociatedTagsResponse(associatedTags));
+            responseStreamObserver.onCompleted();
+        } else {
+            responseStreamObserver.onError(Status.NOT_FOUND.withDescription("Recipe not found").asException());
+        }
+    }
+
+    @Override
     public void createRecipe(CreateRecipeRequest request, StreamObserver<RecipeResponse> responseStreamObserver) {
         var recipe = recipeService.createRecipe(GrpcDtoConverter.toRecipe(request.getRecipe()));
 

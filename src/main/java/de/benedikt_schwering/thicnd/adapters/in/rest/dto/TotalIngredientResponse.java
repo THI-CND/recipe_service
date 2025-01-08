@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TotalIngredientResponse {
-    private String ingredient;
+    private long ingredient;
     private double quantity;
 
     public static TotalIngredientResponse fromQuantifiedIngredient(QuantifiedIngredient quantifiedIngredient) {

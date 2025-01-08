@@ -8,7 +8,7 @@ import lombok.*;
 public class QuantifiedIngredient {
     private String id;
     @NonNull
-    private String ingredient;
+    private long ingredient;
     @NonNull
     private double quantity;
 }

@@ -1,5 +1,6 @@
 package de.benedikt_schwering.thicnd.domain;
 
+import de.benedikt_schwering.thicnd.domain.model.AssociatedTags;
 import de.benedikt_schwering.thicnd.domain.model.QuantifiedIngredient;
 import de.benedikt_schwering.thicnd.domain.model.Recipe;
 import de.benedikt_schwering.thicnd.domain.model.Step;
@@ -19,6 +20,8 @@ public interface RecipeService {
     void deleteRecipe(String id);
 
     List<QuantifiedIngredient> getTotalIngredients(Recipe recipe);
+
+    AssociatedTags getAssociatedTags(Recipe recipe);
 
     Optional<Recipe> addStepToRecipe(String id, Step step);
 
