@@ -1,6 +1,11 @@
 # Recipe Service
 Der Recipe Service verwaltet Rezepte, bestehend aus einzelnen Zubereitungsschritten und Zutaten mit Mengenangaben.
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=THI-CND_recipe_service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=THI-CND_recipe_service)
+
+## Setup
+...
+
 ## APIs
 ### REST
 #### V1
