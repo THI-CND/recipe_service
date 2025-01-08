@@ -3,10 +3,67 @@ Der Recipe Service verwaltet Rezepte, bestehend aus einzelnen Zubereitungsschrit
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=THI-CND_recipe_service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=THI-CND_recipe_service)
 
-## Setup
-...
+## Getting Started
+### Abhängigkeiten
+Um das Projekt lokal zu starten, müssen die folgenden Abhängigkeiten installiert werden:
+- Java 23 Temurin JDK
+- Maven 3+
+- Docker
+- Docker Compose
 
-## APIs
+### Starten
+Um das Projekt lokal zu bauen, führen Sie den folgenden Befehl aus:
+```bash
+mvn clean install
+```
+Das gebaute Projekt kann mit dem folgenden Befehl gestartet werden:
+```bash
+java -jar target/thicnd-<version>.jar
+```
+
+### Entwicklungsumgebung
+Als Entwicklungsumgebung wird IntelliJ IDEA verwendet und empfohlen.
+
+### Docker
+Das Projekt kann auch lokal per Docker gestartet werden.\
+Dazu muss im Projektordner der folgende Befehl ausgeführt werden:
+```bash
+docker compose up
+```
+Die Konfiguration startet im Standard eine Postgres Datenbank und eine RabbitMQ Message Queue.
+Der Recipe Service wird automatisch gestartet und kann unter Port 8080 (REST API) und Port 9090 (gRPC) erreicht werden.
+
+### Profile
+#### Development
+Standardmäßig wird das Profil `development` verwendet.\
+Das Profil beinhaltet das Leeren der Datenbank und die Initialisierung der Datenbank mit Testdaten zum Start der Applikation.
+
+#### Production
+Das Profil `production` beinhaltet keine Initialisierung der Datenbank.\
+Aktiviert werden kann das Profil mit dieser Umgebungsvariable:
+```bash
+SPRING_PROFILES_ACTIVE=production
+```
+
+#### Test
+Zum Ausführen der Tests ist das Profil `test` aktiviert.\
+Es startet eine lokale InMemory Datenbank die zum Standalone Test verwendet werden kann.
+
+### Umgebungsvariablen
+Es stehen die folgenden Umgebungsvariablen zur Konfiguration zur Verfügung:
+- `SPRING_PROFILES_ACTIVE`: Das aktive Profil.\
+Mögliche Werte: `development`, `production`, `test`
+- `DB_URL`: Die URL der Datenbank.
+- `DB_USER`: Der Benutzername der Datenbank.
+- `DB_PASSWORD`: Das Passwort der Datenbank.
+- `RABBIT_HOST`: Der Hostname der RabbitMQ Message Queue.
+- `RABBIT_PORT`: Der Port der RabbitMQ Message Queue.
+- `RABBIT_USER`: Der Benutzername der RabbitMQ Message Queue.
+- `RABBIT_PASSWORD`: Das Passwort der RabbitMQ Message Queue.
+- `INGREDIENT_SERVICE_ADDRESS`: Die Adresse der gRPC Schnittstelle des Ingredient Service.
+- `RABBIT_EXCHANGE`: Der RabbitMQ Exchange Name für das Veröffentlichen der Events.
+
+## Schnittstellen
 ### REST
 #### V1
 ##### GET `/api/v1/recipe`

@@ -20,7 +20,7 @@ spring:
 grpc:
   client:
     ingredient-service:
-      address: "localhost:9091"
+      address: ${INGREDIENT_SERVICE_ADDRESS:localhost:9091}
       negotiation-type: plaintext
 
 service:
