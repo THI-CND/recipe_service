@@ -9,7 +9,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class QuantifiedIngredientRequest {
     @NonNull
-    private String ingredient;
+    private long ingredient;
     @NonNull
     private double quantity;
 
