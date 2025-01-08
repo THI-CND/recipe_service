@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile({"development", "production"})
 public class RabbitMQConfiguration {
     @Value("${service.rabbitmq-exchange}")
     private String rabbitMQExchangeName;

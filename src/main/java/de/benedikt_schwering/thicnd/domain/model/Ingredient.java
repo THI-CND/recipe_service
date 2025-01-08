@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Ingredient {
-    @NonNull
     private long id;
     @NonNull
     private List<String> tags;

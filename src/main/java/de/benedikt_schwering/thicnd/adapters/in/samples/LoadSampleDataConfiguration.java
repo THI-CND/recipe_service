@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import java.util.List;
 
 @Configuration
-@Profile("development")
+@Profile({"development"})
 public class LoadSampleDataConfiguration {
     private final RecipeService recipeService;
 
