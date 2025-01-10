@@ -12,6 +12,7 @@ public class GrpcDtoConverter {
     public static Recipe toRecipe(RecipeRequest recipeRequest) {
         return new Recipe(
                 recipeRequest.getName(),
+                recipeRequest.getAuthor(),
                 recipeRequest.getDescription(),
                 toSteps(recipeRequest.getStepsList())
         );
@@ -55,6 +56,7 @@ public class GrpcDtoConverter {
         return RecipeResponse.newBuilder()
                 .setId(recipe.getId())
                 .setName(recipe.getName())
+                .setAuthor(recipe.getAuthor())
                 .setDescription(recipe.getDescription())
                 .addAllSteps(toStepResponses(recipe.getSteps()))
                 .build();

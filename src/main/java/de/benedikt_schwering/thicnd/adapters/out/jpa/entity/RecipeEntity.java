@@ -17,6 +17,7 @@ public class RecipeEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+    private String author;
     private String description;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<StepEntity> steps;
@@ -25,6 +26,7 @@ public class RecipeEntity {
         return new RecipeEntity(
                 recipe.getId(),
                 recipe.getName(),
+                recipe.getAuthor(),
                 recipe.getDescription(),
                 recipe.getSteps().stream().map(StepEntity::fromStep).toList()
         );
@@ -34,6 +36,7 @@ public class RecipeEntity {
         return new Recipe(
                 getId(),
                 getName(),
+                getAuthor(),
                 getDescription(),
                 getSteps().stream().map(StepEntity::toStep).toList()
         );
