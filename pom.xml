@@ -10,7 +10,7 @@
     </parent>
     <groupId>de.benedikt-schwering</groupId>
     <artifactId>thicnd</artifactId>
-    <version>1.4.0-next.5</version>
+    <version>1.4.0-next.6</version>
     <name>recipe_service</name>
     <url/>
     <licenses>
