@@ -11,18 +11,19 @@ import org.springframework.context.annotation.Profile;
 import java.util.List;
 
 @Configuration
-@Profile("development")
+@Profile({"development"})
 public class LoadSampleDataConfiguration {
     private final RecipeService recipeService;
 
     Recipe recipe1 = new Recipe(
             "Spaghetti Carbonara",
             "Spaghetti Carbonara is a classic Italian pasta dish that is quick and easy to make. The creamy sauce is made with pancetta, eggs, and Parmesan cheese. This recipe uses spaghetti, but you can use any pasta you like.",
+            "Benedikt",
             List.of(
                     new Step(
                             List.of(
                                     new QuantifiedIngredient(
-                                            "spaghetti",
+                                            1,
                                             200
                                     )
                             ),
@@ -31,11 +32,11 @@ public class LoadSampleDataConfiguration {
                     new Step(
                             List.of(
                                     new QuantifiedIngredient(
-                                            "pancetta",
+                                            2,
                                             100
                                     ),
                                     new QuantifiedIngredient(
-                                            "olive oil",
+                                            1,
                                             1
                                     )
                             ),

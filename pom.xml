@@ -11,7 +11,7 @@
     <groupId>de.benedikt-schwering</groupId>
     <artifactId>thicnd</artifactId>
     <version>1.4.0</version>
-    <name>RecipeService</name>
+    <name>recipe_service</name>
     <url/>
     <licenses>
         <license/>
@@ -29,7 +29,9 @@
         <java.version>23</java.version>
         <protobuf.version>3.24.0</protobuf.version>
         <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
-        <grpc.version>1.58.0</grpc.version>
+        <grpc.version>1.69.0</grpc.version>
+        <sonar.organization>thi-cnd</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
         <dependency>
@@ -46,16 +48,22 @@
             <artifactId>grpc-spring-boot-starter</artifactId>
             <version>3.1.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-client-spring-boot-starter</artifactId>
+            <version>3.1.0.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
+            <artifactId>grpc-all</artifactId>
             <version>${grpc.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-            <version>${grpc.version}</version>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>5.2.0</version>
         </dependency>
 
         <dependency>
@@ -86,6 +94,10 @@
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
         </dependency>
     </dependencies>
 

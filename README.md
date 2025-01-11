@@ -1,7 +1,69 @@
 # Recipe Service
 Der Recipe Service verwaltet Rezepte, bestehend aus einzelnen Zubereitungsschritten und Zutaten mit Mengenangaben.
 
-## APIs
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=THI-CND_recipe_service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=THI-CND_recipe_service)
+
+## Getting Started
+### Abhängigkeiten
+Um das Projekt lokal zu starten, müssen die folgenden Abhängigkeiten installiert werden:
+- Java 23 Temurin JDK
+- Maven 3+
+- Docker
+- Docker Compose
+
+### Starten
+Um das Projekt lokal zu bauen, führen Sie den folgenden Befehl aus:
+```bash
+mvn clean install
+```
+Das gebaute Projekt kann mit dem folgenden Befehl gestartet werden:
+```bash
+java -jar target/thicnd-<version>.jar
+```
+
+### Entwicklungsumgebung
+Als Entwicklungsumgebung wird IntelliJ IDEA verwendet und empfohlen.
+
+### Docker
+Das Projekt kann auch lokal per Docker gestartet werden.\
+Dazu muss im Projektordner der folgende Befehl ausgeführt werden:
+```bash
+docker compose up
+```
+Die Konfiguration startet im Standard eine Postgres Datenbank und eine RabbitMQ Message Queue.
+Der Recipe Service wird automatisch gestartet und kann unter Port 8080 (REST API) und Port 9090 (gRPC) erreicht werden.
+
+### Profile
+#### Development
+Standardmäßig wird das Profil `development` verwendet.\
+Das Profil beinhaltet das Leeren der Datenbank und die Initialisierung der Datenbank mit Testdaten zum Start der Applikation.
+
+#### Production
+Das Profil `production` beinhaltet keine Initialisierung der Datenbank.\
+Aktiviert werden kann das Profil mit dieser Umgebungsvariable:
+```bash
+SPRING_PROFILES_ACTIVE=production
+```
+
+#### Test
+Zum Ausführen der Tests ist das Profil `test` aktiviert.\
+Es startet eine lokale InMemory Datenbank die zum Standalone Test verwendet werden kann.
+
+### Umgebungsvariablen
+Es stehen die folgenden Umgebungsvariablen zur Konfiguration zur Verfügung:
+- `SPRING_PROFILES_ACTIVE`: Das aktive Profil.\
+Mögliche Werte: `development`, `production`, `test`
+- `DB_URL`: Die URL der Datenbank.
+- `DB_USER`: Der Benutzername der Datenbank.
+- `DB_PASSWORD`: Das Passwort der Datenbank.
+- `RABBIT_HOST`: Der Hostname der RabbitMQ Message Queue.
+- `RABBIT_PORT`: Der Port der RabbitMQ Message Queue.
+- `RABBIT_USER`: Der Benutzername der RabbitMQ Message Queue.
+- `RABBIT_PASSWORD`: Das Passwort der RabbitMQ Message Queue.
+- `INGREDIENT_SERVICE_ADDRESS`: Die Adresse der gRPC Schnittstelle des Ingredient Service.
+- `RABBIT_EXCHANGE`: Der RabbitMQ Exchange Name für das Veröffentlichen der Events.
+
+## Schnittstellen
 ### REST
 #### V1
 ##### GET `/api/v1/recipe`
@@ -21,6 +83,14 @@ Gibt die Gesamtmenge aller Zutaten des Rezepts mit der ID `id` zurück.\
 Response:
 - Status: 200 OK
 - Body: `List<TotalIngredientResponse>`
+
+##### GET `/api/v1/recipe/{id}/associated-tags`
+Gibt alle Tags zurück, die mit dem Rezept mit der ID `id` assoziiert sind.\
+`Intersection` umfasst die Tags, die in jederem Rezept vorkommen.\
+`Union` umfasst die Tags, die in mindestens einem Rezept vorkommen.\
+Response:
+- Status: 200 OK
+- Body: `List<AssociatedTagsResponse>`
 
 ##### POST `/api/v1/recipe`
 Erstellt ein neues Rezept.\
@@ -113,6 +183,7 @@ service RecipeService {
   rpc GetRecipes (Null) returns (RecipesResponse);
   rpc GetRecipe (RecipeIdRequest) returns (RecipeResponse);
   rpc GetTotalIngredients (RecipeIdRequest) returns (TotalIngredientsResponse);
+  rpc GetAssociatedTags (RecipeIdRequest) returns (AssociatedTagsResponse);
   rpc CreateRecipe (CreateRecipeRequest) returns (RecipeResponse);
   rpc UpdateRecipe (UpdateRecipeRequest) returns (RecipeResponse);
   rpc DeleteRecipe (RecipeIdRequest) returns (Null);
@@ -145,7 +216,7 @@ message StepRequest {
 }
 
 message QuantifiedIngredientRequest {
-  string ingredient = 1;
+  int64 ingredient = 1;
   double quantity = 2;
 }
 
@@ -168,7 +239,7 @@ message StepResponse {
 
 message QuantifiedIngredientResponse {
   string id = 1;
-  string ingredient = 2;
+  int64 ingredient = 2;
   double quantity = 3;
 }
 
@@ -177,8 +248,13 @@ message TotalIngredientsResponse {
 }
 
 message TotalIngredientResponse {
-  string ingredient = 1;
+  int64 ingredient = 1;
   double quantity = 2;
+}
+
+message AssociatedTagsResponse {
+  repeated string intersection = 1;
+  repeated string union = 2;
 }
 ```
 
@@ -205,7 +281,7 @@ Payload: `RecipeDeletedEvent`
     {
       "quantifiedIngredients": [
         {
-          "ingredient": "string",
+          "ingredient": 0,
           "quantity": 0
         }
       ],
@@ -227,7 +303,7 @@ Payload: `RecipeDeletedEvent`
       "quantifiedIngredients": [
         {
           "id": "string",
-          "ingredient": "string",
+          "ingredient": 0,
           "quantity": 0
         }
       ],
@@ -250,7 +326,7 @@ Payload: `RecipeDeletedEvent`
 {
   "quantifiedIngredients": [
     {
-      "ingredient": "string",
+      "ingredient": 0,
       "quantity": 0
     }
   ],
@@ -265,7 +341,7 @@ Payload: `RecipeDeletedEvent`
   "quantifiedIngredients": [
     {
       "id": "string",
-      "ingredient": "string",
+      "ingredient": 0,
       "quantity": 0
     }
   ],
@@ -276,7 +352,7 @@ Payload: `RecipeDeletedEvent`
 ### `QuantifiedIngredientRequest`
 ```json
 {
-  "ingredient": "string",
+  "ingredient": 0,
   "quantity": 0
 }
 ```
@@ -285,7 +361,7 @@ Payload: `RecipeDeletedEvent`
 ```json
 {
   "id": "string",
-  "ingredient": "string",
+  "ingredient": 0,
   "quantity": 0
 }
 ```
@@ -302,7 +378,7 @@ Payload: `RecipeDeletedEvent`
       "quantifiedIngredients": [
         {
           "id": "string",
-          "ingredient": "string",
+          "ingredient": 0,
           "quantity": 0
         }
       ],

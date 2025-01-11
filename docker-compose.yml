@@ -16,20 +16,29 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-#  recipe-service:
-#    image: ghcr.io/thi-cnd/recipe_service:latest
-#    restart: unless-stopped
-#    ports:
-#      - "8080:8080"
-#      - "9090:9090"
-#    environment:
-#        DB_URL: jdbc:postgresql://postgres:5432/recipe
-#        DB_USER: postgres
-#        DB_PASSWORD: password
-#        RABBIT_HOST: rabbitmq
-#        RABBIT_PORT: 5672
-#        RABBIT_USER: guest
-#        RABBIT_PASSWORD: guest
-#    depends_on:
-#      - postgres
-#      - rabbitmq
+  redis:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  recipe-service:
+    image: ghcr.io/thi-cnd/recipe_service:next
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    environment:
+        SPRING_PROFILES_ACTIVE: development
+        DB_URL: jdbc:postgresql://postgres:5432/recipe
+        DB_USER: postgres
+        DB_PASSWORD: password
+        RABBIT_HOST: rabbitmq
+        RABBIT_PORT: 5672
+        RABBIT_USER: guest
+        RABBIT_PASSWORD: guest
+        INGREDIENT_SERVICE_ADDRESS: localhost:9091 # service will soft fail if not provided - everything will work except for ingredient related use cases
+        RABBIT_EXCHANGE: recipemanagement
+    depends_on:
+      - postgres
+      - rabbitmq

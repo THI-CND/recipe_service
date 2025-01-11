@@ -1,5 +1,6 @@
 package de.benedikt_schwering.thicnd.adapters.in.grpc.dto;
 
+import de.benedikt_schwering.thicnd.domain.model.AssociatedTags;
 import de.benedikt_schwering.thicnd.domain.model.QuantifiedIngredient;
 import de.benedikt_schwering.thicnd.domain.model.Recipe;
 import de.benedikt_schwering.thicnd.domain.model.Step;
@@ -11,6 +12,7 @@ public class GrpcDtoConverter {
     public static Recipe toRecipe(RecipeRequest recipeRequest) {
         return new Recipe(
                 recipeRequest.getName(),
+                recipeRequest.getAuthor(),
                 recipeRequest.getDescription(),
                 toSteps(recipeRequest.getStepsList())
         );
@@ -54,6 +56,7 @@ public class GrpcDtoConverter {
         return RecipeResponse.newBuilder()
                 .setId(recipe.getId())
                 .setName(recipe.getName())
+                .setAuthor(recipe.getAuthor())
                 .setDescription(recipe.getDescription())
                 .addAllSteps(toStepResponses(recipe.getSteps()))
                 .build();
@@ -99,6 +102,13 @@ public class GrpcDtoConverter {
         return TotalIngredientResponse.newBuilder()
                 .setIngredient(quantifiedIngredient.getIngredient())
                 .setQuantity(quantifiedIngredient.getQuantity())
+                .build();
+    }
+
+    public static AssociatedTagsResponse toAssociatedTagsResponse(AssociatedTags associatedTags) {
+        return AssociatedTagsResponse.newBuilder()
+                .addAllIntersection(associatedTags.getIntersection())
+                .addAllUnion(associatedTags.getUnion())
                 .build();
     }
 }

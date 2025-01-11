@@ -54,12 +54,13 @@ class RecipeRestV1ControllerTests {
     public void createRecipe() throws Exception {
         var recipe = new RecipeRequest(
                 "Spaghetti Carbonara",
+                "Benedikt",
                 "Spaghetti with bacon, eggs, and cheese",
                 List.of(
                         new StepRequest(
                                 List.of(
                                         new QuantifiedIngredientRequest(
-                                                "Spaghetti",
+                                                1,
                                                 200
                                         )
                                 ),
@@ -68,15 +69,15 @@ class RecipeRestV1ControllerTests {
                         new StepRequest(
                                 List.of(
                                         new QuantifiedIngredientRequest(
-                                                "Bacon",
+                                                2,
                                                 100
                                         ),
                                         new QuantifiedIngredientRequest(
-                                                "Eggs",
+                                                3,
                                                 2
                                         ),
                                         new QuantifiedIngredientRequest(
-                                                "Parmesan cheese",
+                                                4,
                                                 50
                                         )
                                 ),
