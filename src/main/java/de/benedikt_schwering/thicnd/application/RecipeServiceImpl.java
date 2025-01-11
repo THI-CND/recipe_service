@@ -1,11 +1,11 @@
 package de.benedikt_schwering.thicnd.application;
 
+import de.benedikt_schwering.thicnd.domain.IngredientService;
 import de.benedikt_schwering.thicnd.domain.RecipeService;
 import de.benedikt_schwering.thicnd.domain.model.AssociatedTags;
 import de.benedikt_schwering.thicnd.domain.model.QuantifiedIngredient;
 import de.benedikt_schwering.thicnd.domain.model.Recipe;
 import de.benedikt_schwering.thicnd.domain.model.Step;
-import de.benedikt_schwering.thicnd.ports.out.IngredientProvider;
 import de.benedikt_schwering.thicnd.ports.out.RecipeEvents;
 import de.benedikt_schwering.thicnd.ports.out.RecipeRepository;
 import io.grpc.StatusRuntimeException;
@@ -17,12 +17,12 @@ import java.util.*;
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeEvents recipeEvents;
-    private final IngredientProvider ingredientProvider;
+    private final IngredientService ingredientService;
 
-    RecipeServiceImpl(RecipeRepository recipeRepository, RecipeEvents recipeEvents, IngredientProvider ingredientProvider) {
+    RecipeServiceImpl(RecipeRepository recipeRepository, RecipeEvents recipeEvents, IngredientService ingredientService) {
         this.recipeRepository = recipeRepository;
         this.recipeEvents = recipeEvents;
-        this.ingredientProvider = ingredientProvider;
+        this.ingredientService = ingredientService;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         for (int i = 0; i < totalIngredients.size(); i++) {
             try {
-                var ingredient = ingredientProvider.getIngredient(totalIngredients.get(i).getIngredient());
+                var ingredient = ingredientService.getIngredient(totalIngredients.get(i).getIngredient());
 
                 union.addAll(ingredient.getTags());
 
