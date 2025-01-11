@@ -206,8 +206,9 @@ message RecipeIdRequest {
 
 message RecipeRequest {
   string name = 1;
-  string description = 2;
-  repeated StepRequest steps = 3;
+  string author = 2;
+  string description = 3;
+  repeated StepRequest steps = 4;
 }
 
 message StepRequest {
@@ -227,8 +228,9 @@ message RecipesResponse {
 message RecipeResponse {
   string id = 1;
   string name = 2;
-  string description = 3;
-  repeated StepResponse steps = 4;
+  string author = 3;
+  string description = 4;
+  repeated StepResponse steps = 5;
 }
 
 message StepResponse {
