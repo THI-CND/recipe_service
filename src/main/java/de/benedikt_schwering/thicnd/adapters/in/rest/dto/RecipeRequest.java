@@ -13,6 +13,8 @@ public class RecipeRequest {
     @NonNull
     private String name;
     @NonNull
+    private String author;
+    @NonNull
     private String description;
     @NonNull
     private List<StepRequest> steps;
@@ -20,6 +22,7 @@ public class RecipeRequest {
     public Recipe toRecipe() {
         return new Recipe(
                 getName(),
+                getAuthor(),
                 getDescription(),
                 steps.stream().map(StepRequest::toStep).toList()
         );

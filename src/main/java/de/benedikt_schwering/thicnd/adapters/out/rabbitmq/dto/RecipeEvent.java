@@ -13,6 +13,7 @@ import java.util.List;
 public class RecipeEvent {
     private String id;
     private String name;
+    private String author;
     private String description;
     private List<StepEvent> steps;
 
@@ -20,6 +21,7 @@ public class RecipeEvent {
         return new RecipeEvent(
                 recipe.getId(),
                 recipe.getName(),
+                recipe.getAuthor(),
                 recipe.getDescription(),
                 recipe.getSteps().stream().map(StepEvent::fromStep).toList()
         );

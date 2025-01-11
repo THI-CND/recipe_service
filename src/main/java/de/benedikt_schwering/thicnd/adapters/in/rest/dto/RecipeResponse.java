@@ -11,6 +11,7 @@ import java.util.List;
 public class RecipeResponse {
     private String id;
     private String name;
+    private String author;
     private String description;
     private List<StepResponse> steps;
 
@@ -18,6 +19,7 @@ public class RecipeResponse {
         return new RecipeResponse(
                 recipe.getId(),
                 recipe.getName(),
+                recipe.getAuthor(),
                 recipe.getDescription(),
                 recipe.getSteps().stream().map(StepResponse::fromStep).toList()
         );

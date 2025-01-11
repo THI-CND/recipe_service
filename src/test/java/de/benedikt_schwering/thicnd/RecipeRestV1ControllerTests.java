@@ -54,6 +54,7 @@ class RecipeRestV1ControllerTests {
     public void createRecipe() throws Exception {
         var recipe = new RecipeRequest(
                 "Spaghetti Carbonara",
+                "Benedikt",
                 "Spaghetti with bacon, eggs, and cheese",
                 List.of(
                         new StepRequest(

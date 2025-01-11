@@ -16,6 +16,12 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  redis:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
   recipe-service:
     image: ghcr.io/thi-cnd/recipe_service:next
     restart: unless-stopped

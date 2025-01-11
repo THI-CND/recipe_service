@@ -12,6 +12,8 @@ public class Recipe {
     @NonNull
     private String name;
     @NonNull
+    private String author;
+    @NonNull
     private String description;
     @NonNull
     private List<Step> steps;
