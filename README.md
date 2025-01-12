@@ -60,6 +60,10 @@ Mögliche Werte: `development`, `production`, `test`
 - `RABBIT_PORT`: Der Port der RabbitMQ Message Queue.
 - `RABBIT_USER`: Der Benutzername der RabbitMQ Message Queue.
 - `RABBIT_PASSWORD`: Das Passwort der RabbitMQ Message Queue.
+- `REDIS_HOST`: Der Hostname der Redis Datenbank.
+- `REDIS_PORT`: Der Port der Redis Datenbank.
+- `REDIS_PASSWORD`: Das Passwort der Redis Datenbank.
+- `REDIS_DATABASE`: Die Datenbanknummer der Redis Datenbank.
 - `INGREDIENT_SERVICE_ADDRESS`: Die Adresse der gRPC Schnittstelle des Ingredient Service.
 - `RABBIT_EXCHANGE`: Der RabbitMQ Exchange Name für das Veröffentlichen der Events.
 
