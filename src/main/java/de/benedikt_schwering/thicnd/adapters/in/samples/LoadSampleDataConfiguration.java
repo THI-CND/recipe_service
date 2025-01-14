@@ -17,8 +17,8 @@ public class LoadSampleDataConfiguration {
 
     Recipe recipe1 = new Recipe(
             "Spaghetti Carbonara",
-            "Spaghetti Carbonara is a classic Italian pasta dish that is quick and easy to make. The creamy sauce is made with pancetta, eggs, and Parmesan cheese. This recipe uses spaghetti, but you can use any pasta you like.",
             "Benedikt",
+            "Spaghetti Carbonara is a classic Italian pasta dish that is quick and easy to make. The creamy sauce is made with pancetta, eggs, and Parmesan cheese. This recipe uses spaghetti, but you can use any pasta you like.",
             List.of(
                     new Step(
                             List.of(
