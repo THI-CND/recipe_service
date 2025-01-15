@@ -8,7 +8,7 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GrpcIngredientProvider implements IngredientProvider {
+public class GrpcIngredientProviderImpl implements IngredientProvider {
     @GrpcClient("ingredient-service")
     private IngredientServiceGrpc.IngredientServiceBlockingStub ingredientServiceStub;
 

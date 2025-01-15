@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RecipeRepositoryImpl implements RecipeRepository {
+public class JpaRecipeRepositoryImpl implements RecipeRepository {
     private final JpaRecipeCrudRepository jpaRecipeRepository;
 
-    RecipeRepositoryImpl(JpaRecipeCrudRepository jpaRecipeRepository) {
+    JpaRecipeRepositoryImpl(JpaRecipeCrudRepository jpaRecipeRepository) {
         this.jpaRecipeRepository = jpaRecipeRepository;
     }
 

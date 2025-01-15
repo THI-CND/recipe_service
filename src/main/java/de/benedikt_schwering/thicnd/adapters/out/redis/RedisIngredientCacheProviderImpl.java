@@ -10,10 +10,10 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class IngredientCacheProviderImpl implements IngredientCacheProvider {
+public class RedisIngredientCacheProviderImpl implements IngredientCacheProvider {
     private final RedisTemplate<Long, IngredientCache> template;
 
-    public IngredientCacheProviderImpl(RedisTemplate<Long, IngredientCache> template) {
+    public RedisIngredientCacheProviderImpl(RedisTemplate<Long, IngredientCache> template) {
         this.template = template;
     }
 

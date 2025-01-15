@@ -3,6 +3,9 @@ Der Recipe Service verwaltet Rezepte, bestehend aus einzelnen Zubereitungsschrit
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=THI-CND_recipe_service&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=THI-CND_recipe_service)
 
+## Architektur
+![Architekturdiagramm](docs/recipe-service-architecture.drawio.png)
+
 ## Getting Started
 ### Abhängigkeiten
 Um das Projekt lokal zu starten, müssen die folgenden Abhängigkeiten installiert werden:
@@ -282,6 +285,7 @@ Payload: `RecipeDeletedEvent`
 ```json
 {
   "name": "string",
+  "author": "string",
   "description": "string",
   "steps": [
     {
@@ -302,6 +306,7 @@ Payload: `RecipeDeletedEvent`
 {
   "id": "string",
   "name": "string",
+  "author": "string",
   "description": "string",
   "steps": [
     {
@@ -322,8 +327,20 @@ Payload: `RecipeDeletedEvent`
 ### `TotalIngredientResponse`
 ```json
 {
-  "ingredient": "string",
+  "ingredient": 0,
   "quantity": 0
+}
+```
+
+### `AssociatedTagsResponse`
+```json
+{
+  "intersection": [
+    "string"
+  ],
+  "union": [
+    "string"
+  ]
 }
 ```
 
@@ -377,6 +394,7 @@ Payload: `RecipeDeletedEvent`
 {
   "id": "string",
   "name": "string",
+  "author": "string",
   "description": "string",
   "steps": [
     {

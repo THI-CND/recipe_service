@@ -9,10 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/step")
-public class StepRestV1Controller {
+public class RestV1StepController {
     private final StepService stepService;
 
-    public StepRestV1Controller(StepService stepService) {
+    public RestV1StepController(StepService stepService) {
         this.stepService = stepService;
     }
 

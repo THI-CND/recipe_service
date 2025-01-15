@@ -9,10 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/quantified-ingredient")
-public class QuantifiedIngredientRestV1Controller {
+public class RestV1QuantifiedIngredientController {
     private final QuantifiedIngredientService quantifiedIngredientService;
 
-    public QuantifiedIngredientRestV1Controller(QuantifiedIngredientService quantifiedIngredientService) {
+    public RestV1QuantifiedIngredientController(QuantifiedIngredientService quantifiedIngredientService) {
         this.quantifiedIngredientService = quantifiedIngredientService;
     }
 
