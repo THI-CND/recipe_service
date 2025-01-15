@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
-class RecipeRestV1ControllerTests {
+class RestV1RecipeControllerTests {
     private final MockMvc mvc;
     private final RecipeRepository recipeRepository;
 
@@ -34,7 +34,7 @@ class RecipeRestV1ControllerTests {
     private RecipeEvents recipeEvents;
 
     @Autowired
-    public RecipeRestV1ControllerTests(MockMvc mvc, RecipeRepository recipeRepository) {
+    public RestV1RecipeControllerTests(MockMvc mvc, RecipeRepository recipeRepository) {
         this.mvc = mvc;
         this.recipeRepository = recipeRepository;
     }

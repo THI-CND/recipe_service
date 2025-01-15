@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class QuantifiedIngredientRepositoryImpl implements QuantifiedIngredientRepository {
+public class JpaQuantifiedIngredientRepositoryImpl implements QuantifiedIngredientRepository {
     private final JpaQuantifiedIngredientCrudRepository jpaQuantifiedIngredientRepository;
 
-    public QuantifiedIngredientRepositoryImpl(JpaQuantifiedIngredientCrudRepository jpaQuantifiedIngredientRepository) {
+    public JpaQuantifiedIngredientRepositoryImpl(JpaQuantifiedIngredientCrudRepository jpaQuantifiedIngredientRepository) {
         this.jpaQuantifiedIngredientRepository = jpaQuantifiedIngredientRepository;
     }
 

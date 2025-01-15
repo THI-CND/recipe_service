@@ -9,10 +9,10 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
-public class RecipeGrpcController extends RecipeServiceGrpc.RecipeServiceImplBase {
+public class GrpcRecipeController extends RecipeServiceGrpc.RecipeServiceImplBase {
     private final RecipeService recipeService;
 
-    public RecipeGrpcController(RecipeService recipeService) {
+    public GrpcRecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 

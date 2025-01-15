@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class StepRepositoryImpl implements StepRepository {
+public class JpaStepRepositoryImpl implements StepRepository {
     private final JpaStepCrudRepository jpaStepRepository;
 
-    public StepRepositoryImpl(JpaStepCrudRepository jpaStepRepository) {
+    public JpaStepRepositoryImpl(JpaStepCrudRepository jpaStepRepository) {
         this.jpaStepRepository = jpaStepRepository;
     }
 

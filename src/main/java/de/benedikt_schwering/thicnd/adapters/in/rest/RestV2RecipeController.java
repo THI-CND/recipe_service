@@ -9,10 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v2/recipe")
-public class RecipeRestV2Controller {
+public class RestV2RecipeController {
     private final RecipeService recipeService;
 
-    public RecipeRestV2Controller(RecipeService recipeService) {
+    public RestV2RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 
